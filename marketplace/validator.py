@@ -38,10 +38,8 @@ def validate_level_2(data):
     except KeyError:
         raise ValueError("Error (Level 2): Invalid block structure. Missing 'design.graph.blocks' or 'wires'.")
 
-    # Check for basic.code node
-    has_code = any(b.get("type") == "basic.code" for b in blocks)
-    if not has_code:
-        raise ValueError("Error (Level 2): Block must contain at least one 'basic.code' node.")
+    # Removed: We no longer require a 'basic.code' node, 
+    # as users can build blocks purely out of other built-in blocks (like camera -> drive).
 
     # Find all basic.input and basic.output nodes
     input_nodes = {b["id"]: b for b in blocks if b.get("type") == "basic.input"}
