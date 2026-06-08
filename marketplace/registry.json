@@ -1,44 +1,6 @@
 {
   "blocks": [
     {
-      "id": "Random_Test",
-      "name": "Random_Test",
-      "author": "JDErobot",
-      "version": "1.22.3",
-      "description": "a random test block",
-      "category": "ROS2",
-      "tags": [
-        "face detction",
-        "ros2",
-        "motor driver"
-      ],
-      "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/marketplace/blocks/Random_Test.vc3"
-    },
-    {
-      "id": "test_level2_fail",
-      "name": "test_level2_fail",
-      "author": "Sarvesh",
-      "version": "1.2",
-      "description": "testing failed at level2",
-      "category": "Locomotion",
-      "tags": [
-        "test"
-      ],
-      "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/marketplace/blocks/test_level2_fail.vc3"
-    },
-    {
-      "id": "w",
-      "name": "w",
-      "author": "www",
-      "version": "ww",
-      "description": "ww",
-      "category": "Control Systems",
-      "tags": [
-        "w"
-      ],
-      "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/marketplace/blocks/w.vc3"
-    },
-    {
       "id": "Untitled (1)",
       "name": "",
       "author": "",
@@ -47,19 +9,6 @@
       "category": "Uncategorized",
       "tags": [],
       "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/marketplace/blocks/Untitled (1).vc3"
-    },
-    {
-      "id": "test_correctblock",
-      "name": "test_correctbock",
-      "author": "Jmpalza",
-      "version": "1.2.3",
-      "description": "a test block",
-      "category": "Locomotion",
-      "tags": [
-        "cv2",
-        "ros2"
-      ],
-      "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/marketplace/blocks/test_correctblock.vc3"
     },
     {
       "id": "test2_final",
@@ -74,18 +23,6 @@
         "control"
       ],
       "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/marketplace/blocks/test2_final.vc3"
-    },
-    {
-      "id": "www",
-      "name": "www",
-      "author": "www",
-      "version": "www",
-      "description": "www",
-      "category": "Control Systems",
-      "tags": [
-        "www"
-      ],
-      "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/marketplace/blocks/www.vc3"
     }
   ]
 }
