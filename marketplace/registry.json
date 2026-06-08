@@ -15,6 +15,28 @@
       "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/marketplace/blocks/Random_Test.vc3"
     },
     {
+      "id": "test_level2_fail",
+      "name": "test_level2_fail",
+      "author": "Sarvesh",
+      "version": "1.2",
+      "description": "testing failed at level2",
+      "category": "Locomotion",
+      "tags": [
+        "test"
+      ],
+      "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/marketplace/blocks/test_level2_fail.vc3"
+    },
+    {
+      "id": "Untitled (1)",
+      "name": "",
+      "author": "",
+      "version": "",
+      "description": "",
+      "category": "Uncategorized",
+      "tags": [],
+      "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/marketplace/blocks/Untitled (1).vc3"
+    },
+    {
       "id": "test_correctblock",
       "name": "test_correctbock",
       "author": "Jmpalza",
