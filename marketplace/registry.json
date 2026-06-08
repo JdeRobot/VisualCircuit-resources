@@ -1,22 +1,18 @@
 {
   "blocks": [
     {
-      "id": "line-follower-pid",
+      "id": "Line Follower PID",
       "name": "Line Follower PID",
-      "author": "Sarvesh Mishra",
+      "author": "Sarvesh Mishra _1981",
       "version": "1.0.0",
-      "description": "A robust PID controller block specifically tuned for line following applications.",
-      "category": "Control Systems",
-      "tags": ["pid", "line follower", "control"],
-      "url": "/blocks/line_follower_pid.json"
-    },
-    {
-      "id": "hsv-color-filter",
-      "name": "HSV Color Filter",
-      "author": "JdeRobot Community",
-      "version": "1.1.0",
-      "description": "Applies an HSV mask to an input image and outputs a binary threshold image.",
-      "url": "/blocks/test.vc3"
+      "description": "A robust PID controller block.",
+      "category": "Machine Learning",
+      "tags": [
+        "pid",
+        "line follower",
+        "control"
+      ],
+      "url": "/blocks/Line Follower PID.vc3"
     }
   ]
 }
