@@ -1,6 +1,20 @@
 {
   "blocks": [
     {
+      "id": "Random_Test",
+      "name": "Random_Test",
+      "author": "JDErobot",
+      "version": "1.22.3",
+      "description": "a random test block",
+      "category": "ROS2",
+      "tags": [
+        "face detction",
+        "ros2",
+        "motor driver"
+      ],
+      "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/marketplace/blocks/Random_Test.vc3"
+    },
+    {
       "id": "test_correctblock",
       "name": "test_correctbock",
       "author": "Jmpalza",
