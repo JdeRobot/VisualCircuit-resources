@@ -62,6 +62,18 @@
         "control"
       ],
       "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/marketplace/blocks/test2_final.vc3"
+    },
+    {
+      "id": "www",
+      "name": "www",
+      "author": "www",
+      "version": "www",
+      "description": "www",
+      "category": "Control Systems",
+      "tags": [
+        "www"
+      ],
+      "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/marketplace/blocks/www.vc3"
     }
   ]
 }
