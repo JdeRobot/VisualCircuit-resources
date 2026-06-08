@@ -1,0 +1,67 @@
+name: Marketplace Block Validator
+
+on:
+  pull_request:
+    paths:
+      - 'marketplace/blocks/**/*.json'
+      - 'marketplace/blocks/**/*.vc3'
+  push:
+    branches:
+      - main
+    paths:
+      - 'marketplace/blocks/**/*.json'
+      - 'marketplace/blocks/**/*.vc3'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Get Changed Files
+        id: get_changed
+        uses: tj-actions/changed-files@v35
+        with:
+          files: |
+            marketplace/blocks/**/*.json
+            marketplace/blocks/**/*.vc3
+
+      - name: Run Validator
+        if: steps.get_changed.outputs.any_changed == 'true'
+        run: |
+          echo "Validating changed block files..."
+          for file in ${{ steps.get_changed.outputs.all_changed_files }}; do
+            echo "Checking $file"
+            python marketplace/validator.py "$file"
+          done
+
+  update-registry:
+    needs: validate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          
+      - name: Run Registry Generator
+        run: |
+          python marketplace/update_registry.py
+          
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add marketplace/registry.json
+          git commit -m "chore: auto-update registry.json" || echo "No changes to commit"
+          git push
