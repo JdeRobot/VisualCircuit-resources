@@ -3,7 +3,7 @@ import os
 import glob
 
 def main():
-    blocks_dir = "marketplace/blocks"
+    blocks_dir = "custom_blocks"
     registry_path = "marketplace/registry.json"
     
     blocks = []
@@ -21,7 +21,7 @@ def main():
             block_id = os.path.splitext(basename)[0]
             
             # The download URL for the raw file on GitHub
-            url = f"https://raw.githubusercontent.com/VisualCircuit-resources/main/marketplace/blocks/{basename}"
+            url = f"https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/custom_blocks/{basename}"
             
             block_entry = {
                 "id": block_id,

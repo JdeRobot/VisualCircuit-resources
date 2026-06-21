@@ -3,14 +3,14 @@ name: Marketplace Block Validator
 on:
   pull_request:
     paths:
-      - 'marketplace/blocks/**/*.json'
-      - 'marketplace/blocks/**/*.vc3'
+      - 'custom_blocks/**/*.json'
+      - 'custom_blocks/**/*.vc3'
   push:
     branches:
       - main
     paths:
-      - 'marketplace/blocks/**/*.json'
-      - 'marketplace/blocks/**/*.vc3'
+      - 'custom_blocks/**/*.json'
+      - 'custom_blocks/**/*.vc3'
 
 jobs:
   validate:
@@ -30,8 +30,8 @@ jobs:
         with:
           separator: ','
           files: |
-            marketplace/blocks/**/*.json
-            marketplace/blocks/**/*.vc3
+            custom_blocks/**/*.json
+            custom_blocks/**/*.vc3
 
       - name: Run Validator
         if: steps.get_changed.outputs.any_changed == 'true'
@@ -40,7 +40,7 @@ jobs:
           IFS=',' read -ra FILES <<< "${{ steps.get_changed.outputs.all_changed_files }}"
           for file in "${FILES[@]}"; do
             echo "Checking $file"
-            python marketplace/validator.py "$file"
+            python .github/workflows/validator.py "$file"
           done
 
   update-registry:
@@ -60,7 +60,7 @@ jobs:
           
       - name: Run Registry Generator
         run: |
-          python marketplace/update_registry.py
+          python .github/workflows/update_registry.py
           
       - name: Commit and Push Changes
         run: |

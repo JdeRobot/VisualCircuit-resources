@@ -114,7 +114,7 @@ def main(filepath):
         print("Validation Successful! Block is safe to merge.")
     except ValueError as e:
         print("-" * 40)
-        print(f"❌ Validation Failed!\n{e}")
+        print(f" Validation Failed!\n{e}")
         sys.exit(1)
 
 if __name__ == "__main__":
