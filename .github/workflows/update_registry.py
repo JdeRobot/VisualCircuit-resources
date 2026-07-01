@@ -21,7 +21,7 @@ def main():
             block_id = os.path.splitext(basename)[0]
             
             # The download URL for the raw file on GitHub
-            url = f"https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/custom_blocks/{basename}"
+            url = f"https://raw.githubusercontent.com/JdeRobot/VisualCircuit-resources/main/custom_blocks/{basename}"
             
             block_entry = {
                 "id": block_id,
