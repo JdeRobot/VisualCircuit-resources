@@ -13,7 +13,7 @@ def validate_level_1(data):
     desc = pkg.get("description", "").strip()
     category = pkg.get("category", "").strip()
     tags = pkg.get("tags", [])
-    
+    # Just check for the user info Data - useful for storing in registry_file
     if not name or name == "Project" or name == "Untitled":
         raise ValueError("Error (Level 1): You must provide a valid Name before publishing.")
         
@@ -35,10 +35,7 @@ def validate_level_2(data):
         wires = data["design"]["graph"]["wires"]
     except KeyError:
         raise ValueError("Error (Level 2): Invalid block structure. Missing 'design.graph.blocks' or 'wires'.")
-
-    # Removed: We no longer require a 'basic.code' node, 
-    # as users can build blocks purely out of other built-in blocks (like camera -> drive).
-
+    
     # Find all basic.input and basic.output nodes
     input_nodes = {b["id"]: b for b in blocks if b.get("type") == "basic.input"}
     output_nodes = {b["id"]: b for b in blocks if b.get("type") == "basic.output"}
@@ -48,7 +45,7 @@ def validate_level_2(data):
     for w in wires:
         wired_blocks.add(w["source"]["block"])
         wired_blocks.add(w["target"]["block"])
-        
+
     for nid in input_nodes:
         if nid not in wired_blocks:
             raise ValueError(f"Error (Level 2): Found a disconnected basic.input node. Please wire it up.")
@@ -57,7 +54,7 @@ def validate_level_2(data):
         if nid not in wired_blocks:
             raise ValueError(f"Error (Level 2): Found a disconnected basic.output node. Please wire it up.")
             
-    # If there is more than 1 block, make sure NO block is left floating disconnected!
+    # If there is more than 1 block, make sure NO block is left floating disconnected, Just Unsure as there migt be some block with no connections,, Upto MENTORS..
     if len(blocks) > 1:
         for b in blocks:
             if b["id"] not in wired_blocks:
