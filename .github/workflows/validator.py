@@ -54,7 +54,6 @@ def validate_level_2(data):
         if nid not in wired_blocks:
             raise ValueError(f"Error (Level 2): Found a disconnected basic.output node. Please wire it up.")
             
-    # If there is more than 1 block, make sure NO block is left floating disconnected, Just Unsure as there migt be some block with no connections,, Upto MENTORS..
             
     print("Structure and wires are valid.")
 
