@@ -3,12 +3,11 @@ import os
 import glob
 
 def main():
-    blocks_dir = "custom_blocks"
-    registry_path = "marketplace/registry.json"
+    blocks_dir = "custom_blocks" # This is the directory name where Custom Blocks will be stored.
+    registry_path = "marketplace/registry.json" 
     
     blocks = []
-    
-    # Search for all .vc3 files
+
     for filepath in glob.glob(f"{blocks_dir}/**/*.vc3", recursive=True) + glob.glob(f"{blocks_dir}/**/*.json", recursive=True):
         try:
             with open(filepath, "r") as f:
@@ -16,11 +15,9 @@ def main():
             
             pkg = data.get("package", {})
             
-            # Use filename as ID
             basename = os.path.basename(filepath)
             block_id = os.path.splitext(basename)[0]
             
-            # The download URL for the raw file on GitHub
             url = f"https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/custom_blocks/{basename}"
             
             block_entry = {
@@ -39,11 +36,9 @@ def main():
             
         except Exception as e:
             print(f"Failed to process {filepath}: {e}")
-            
     registry = {
         "blocks": blocks
     }
-    
     with open(registry_path, "w") as f:
         json.dump(registry, f, indent=2)
         
