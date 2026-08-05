@@ -18,7 +18,7 @@ def main():
             basename = os.path.basename(filepath)
             block_id = os.path.splitext(basename)[0]
             
-            url = f"https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/main/custom_blocks/{basename}"
+            url = f"https://raw.githubusercontent.com/JdeRobot/VisualCircuit-resources/main/custom_blocks/{basename}"
             
             block_entry = {
                 "id": block_id,
