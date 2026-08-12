@@ -68,7 +68,7 @@ jobs:
           
       - name: Run Documentation Updater
         run: |
-          python scripts/update_docs.py
+          python .github/workflows/update_docs.py
           
       - name: Commit and Push Changes
         run: |
