@@ -1,36 +1,40 @@
 import json
 import os
-import glob
 from bs4 import BeautifulSoup
-import urllib.request
 import html
 
 REGISTRY_PATH = 'marketplace/registry.json'
 HTML_PATH = 'blockDocs/Blocks.html'
 CUSTOM_BLOCKS_DIR = 'custom_blocks/'
 
-def extract_code_from_json(json_path):
-    """Extracts Python code from the custom block JSON file"""
-    try:
-        with open(json_path, 'r') as f:
-            data = json.load(f)
-            components = data.get('design', {}).get('graph', {}).get('blocks', [])
-            for block in components:
-                if block.get('type') == 'basic.code':
-                    return block.get('data', {}).get('code', '')
-    except Exception as e:
-        print(f"Error reading code from {json_path}: {e}")
-    return "# Code could not be loaded."
-
-def get_block_html(block_metadata, code):
-    """Generates pdoc-styled HTML for a custom block, including the View Source button"""
+def get_block_html(block_metadata, code, json_data):
+    """Generates pdoc-styled HTML for a custom block, including the View Source button and port info"""
     name = block_metadata.get('name', 'CustomBlock')
     description = block_metadata.get('description', 'No description provided.')
     author = block_metadata.get('author', 'Unknown Author')
     version = block_metadata.get('version', '1.0.0')
     category = block_metadata.get('category', 'Custom')
 
-    # Escape the code for HTML display
+    # Extract Ports and Parameters
+    inputs = []
+    outputs = []
+    parameters = []
+    
+    if json_data:
+        components = json_data.get('design', {}).get('graph', {}).get('blocks', [])
+        for block in components:
+            if block.get('type') == 'basic.code':
+                ports = block.get('data', {}).get('ports', {})
+                inputs = [p.get('name') for p in ports.get('in', [])]
+                outputs = [p.get('name') for p in ports.get('out', [])]
+                params_data = block.get('data', {}).get('params', [])
+                parameters = [p.get('name') for p in params_data]
+                break
+
+    inputs_html = f"<p><strong>Inputs:</strong> {', '.join(inputs) if inputs else 'None'}</p>"
+    outputs_html = f"<p><strong>Outputs:</strong> {', '.join(outputs) if outputs else 'None'}</p>"
+    params_html = f"<p><strong>Parameters:</strong> {', '.join(parameters) if parameters else 'None'}</p>"
+
     escaped_code = html.escape(code)
     toggle_id = f"{name}-view-source".replace(" ", "-")
 
@@ -38,9 +42,11 @@ def get_block_html(block_metadata, code):
     <section class="module-info custom-block">
         <h3 class="modulename" id="{name}">{name}</h3>
         <div class="docstring">
-            <p><strong>Author:</strong> {author} | <strong>Version:</strong> {version}</p>
+            <p><strong>Author:</strong> {author} | <strong>Version:</strong> {version} | <strong>Category:</strong> {category}</p>
             <p>{description}</p>
-            <p><strong>Category:</strong> {category}</p>
+            {inputs_html}
+            {outputs_html}
+            {params_html}
         </div>
         
         <input id="{toggle_id}" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
@@ -69,10 +75,9 @@ def main():
 
     main_content = soup.find('main', class_='pdoc')
     if not main_content:
-        print("Could not find <main class='pdoc'> in HTML.")
+        print("Could not find main class='pdoc' in HTML.")
         return
 
-    # Create or find the Custom Blocks section header
     custom_header_id = 'custom-blocks-marketplace'
     custom_header = soup.find('h2', id=custom_header_id)
     
@@ -81,23 +86,30 @@ def main():
         custom_header.string = 'Custom Marketplace Blocks'
         main_content.append(custom_header)
 
-    # Clear old custom blocks
     for custom_section in soup.find_all('section', class_='custom-block'):
         custom_section.decompose()
 
-    # Append all custom blocks from registry
     for block in registry:
         name = block.get('name', 'Unknown')
         
-        # Try to find the corresponding JSON file in custom_blocks/
         json_filename = f"{name}.json"
         json_path = os.path.join(CUSTOM_BLOCKS_DIR, json_filename)
         
         code = "# Code not found"
+        json_data = None
         if os.path.exists(json_path):
-            code = extract_code_from_json(json_path)
+            try:
+                with open(json_path, 'r') as f:
+                    json_data = json.load(f)
+                    components = json_data.get('design', {}).get('graph', {}).get('blocks', [])
+                    for c in components:
+                        if c.get('type') == 'basic.code':
+                            code = c.get('data', {}).get('code', '')
+                            break
+            except Exception as e:
+                print(f"Error parsing json for {name}: {e}")
             
-        block_html = get_block_html(block, code)
+        block_html = get_block_html(block, code, json_data)
         block_soup = BeautifulSoup(block_html, 'html.parser')
         main_content.append(block_soup)
 
