@@ -89,7 +89,8 @@ def main():
     for custom_section in soup.find_all('section', class_='custom-block'):
         custom_section.decompose()
 
-    for block in registry:
+    # Append all custom blocks from registry
+    for block in registry.get('blocks', []):
         name = block.get('name', 'Unknown')
         
         json_filename = f"{name}.json"
