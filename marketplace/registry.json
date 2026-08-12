@@ -1,3 +1,16 @@
 {
-  "blocks": []
+  "blocks": [
+    {
+      "id": "LaserMapping",
+      "name": "Laser_Mapping",
+      "author": "Jderobot",
+      "version": "1.0.0",
+      "description": "It is the Laser mapping ",
+      "category": "vision",
+      "tags": [
+        "cv2"
+      ],
+      "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/test/e2e-integration/custom_blocks/LaserMapping.vc3"
+    }
+  ]
 }
