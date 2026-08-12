@@ -1,7 +1,7 @@
 {
   "blocks": [
     {
-      "id": "Obstable Avoidance",
+      "id": "Obstable",
       "name": "Obstable Avoidance",
       "author": "Jderobot",
       "version": "1.0.0",
@@ -10,7 +10,7 @@
       "tags": [
         "laser"
       ],
-      "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/test/e2e-integration/custom_blocks/Obstable Avoidance.vc3"
+      "url": "https://raw.githubusercontent.com/Sarvesh-Mishra1981/VisualCircuit-resources/test/e2e-integration/custom_blocks/Obstable.vc3"
     },
     {
       "id": "LaserMapping",
