@@ -4,10 +4,12 @@
 
 If you have built an amazing block and want to share it with the world, follow these steps to get it published on the Marketplace:
 
-1. **Export Your Block**: Design your block in VisualCircuit and click Export Block. You will receive a `.json` and a `.vc3` file.
-2. **Fork the Repository**: Fork this repository and clone it locally.
-3. **Add Your Files**: Place both files inside the `custom_blocks/` folder.
-4. **Submit a Pull Request**: Open a Pull Request using the exact structure below.
+1. **Build the Block**: Open VisualCircuit, construct your block's logic, and write your Python code inside the block.
+2. **Edit Block Info**: Click the **Edit Info** button in VisualCircuit to carefully fill out your block's metadata (Name, Description, Author, Version, and Category).
+3. **Export Files**: Click **Export Block**. This will download two files to your computer: a `.json` file (containing the code and port info) and a `.vc3` file (the graphical layout).
+4. **Fork the Repository**: Fork this repository on GitHub and clone it locally.
+5. **Add Your Files**: Place both the downloaded `.json` and `.vc3` files directly into the `custom_blocks/` folder.
+6. **Submit a Pull Request**: Push your changes and open a Pull Request on GitHub using the exact structure below.
 
 ### Pull Request Structure
 When opening your Pull Request on GitHub, please use the following structure in the description so maintainers can quickly review and merge your block:
