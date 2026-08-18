@@ -48,13 +48,13 @@ def get_template():
         return html_content[:main_start] + "{MAIN_CONTENT}" + html_content[main_end:]
     return "<html><body>{MAIN_CONTENT}</body></html>"
 
-def generate_block_page(block_metadata, code, json_data, template):
+def generate_block_page(block_metadata, code_blocks, json_data, template):
     """
     Generates a dedicated HTML page for a custom block using its metadata.
     
     Args:
         block_metadata: Dictionary containing basic info from registry.json
-        code: Python source code extracted from the block
+        code_blocks: List of Python source code strings extracted from the block
         json_data: Full JSON representation of the .vc3 file to extract port information
         template: The HTML template string with a {MAIN_CONTENT} placeholder
     """
@@ -87,8 +87,34 @@ def generate_block_page(block_metadata, code, json_data, template):
     outputs_str = ', '.join(outputs) if outputs else 'None'
     params_str = ', '.join(parameters) if parameters else 'None'
 
-    # Escape the Python code so it displays safely in the HTML <pre> block
-    escaped_code = html.escape(code)
+    # Attempt to highlight the Python code using pygments if available
+    try:
+        from pygments import highlight
+        from pygments.lexers import PythonLexer
+        from pygments.formatters import HtmlFormatter
+    except ImportError:
+        highlight = None
+
+    sections_html = ""
+    for i, code_snippet in enumerate(code_blocks):
+        if highlight:
+            escaped_code = highlight(code_snippet, PythonLexer(), HtmlFormatter(nowrap=True))
+        else:
+            escaped_code = html.escape(code_snippet)
+            
+        block_id = f"block_{i+1}" if len(code_blocks) > 1 else "main"
+        
+        sections_html += f"""
+    <section id="{block_id}">
+        <input id="{block_id}-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+        <div class="attr function">
+            <span class="def">def</span>
+            <span class="name">{block_id}</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">inputs</span>, </span><span class="param"><span class="n">outputs</span>, </span><span class="param"><span class="n">parameters</span>, </span><span class="param"><span class="n">synchronise</span></span>)</span>
+            <label class="view-source-button" for="{block_id}-view-source"><span>View Source</span></label>
+        </div>
+        <a class="headerlink" href="#{block_id}"></a>
+        <div class="pdoc-code codehilite"><pre><span></span><code>{escaped_code}</code></pre></div>
+    </section>"""
 
     # Build the main content HTML structure mimicking pdoc3 output
     main_content = f"""<main class="pdoc">
@@ -106,10 +132,7 @@ def generate_block_page(block_metadata, code, json_data, template):
             <p><strong>Parameters:</strong> {params_str}</p>
         </div>
     </section>
-    <section>
-        <h2 class="section-title" id="header-classes">Source Code</h2>
-        <div class="pdoc-code codehilite"><pre><span></span><code>{escaped_code}</code></pre></div>
-    </section>
+{sections_html}
 </main>"""
 
     # Inject the content into the template and save the file
@@ -205,9 +228,8 @@ def main():
         name = block.get('name', 'Unknown')
         block_id = block.get('id', name)
         
-        # We attempt to read the payload of the block to extract its source code
         # We check for both .vc3 and .json extensions
-        code = "# Code not found"
+        code_blocks = []
         json_data = None
         
         for ext in ['.vc3', '.json']:
@@ -221,14 +243,18 @@ def main():
                         components = json_data.get('design', {}).get('graph', {}).get('blocks', [])
                         for c in components:
                             if c.get('type') == 'basic.code':
-                                code = c.get('data', {}).get('code', '')
-                                break
+                                block_code = c.get('data', {}).get('code', '')
+                                if block_code:
+                                    code_blocks.append(block_code)
+                        
+                        if not code_blocks:
+                            code_blocks = ["# No Python code found in this custom block"]
                     break
                 except Exception as e:
                     print(f"Error parsing {json_path}: {e}")
                 
         # Generate the standalone HTML documentation page for this block
-        generate_block_page(block, code, json_data, template)
+        generate_block_page(block, code_blocks, json_data, template)
 
     # Finally, update the main index file with links to all the newly generated pages
     update_index(registry)
