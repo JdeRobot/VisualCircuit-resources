@@ -61,11 +61,19 @@ jobs:
       - name: Run Registry Generator
         run: |
           python .github/workflows/update_registry.py
+
+      - name: Install Documentation Dependencies
+        run: |
+          pip install beautifulsoup4 pygments
+          
+      - name: Run Documentation Updater
+        run: |
+          python .github/workflows/update_docs.py
           
       - name: Commit and Push Changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add marketplace/registry.json
-          git commit -m "chore: auto-update registry.json" || echo "No changes to commit"
+          git add marketplace/ blockDocs/
+          git commit -m "chore: auto-update registry and documentation" || echo "No changes to commit"
           git push
