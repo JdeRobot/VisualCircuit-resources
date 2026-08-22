@@ -10,8 +10,8 @@ Workflow:
 1. Reads `marketplace/registry.json` to discover all available custom blocks.
 2. Extracts block metadata (name, description, author, ports) from each block's JSON code.
 3. Dynamically injects this metadata into a reusable HTML template (modeled after the pdoc3 format).
-4. Saves a new standalone HTML file for the block (e.g., `blockDocs/Blocks/Laser_Mapping.html`).
-5. Updates the master index page (`blockDocs/Blocks.html`) to include a link to the new subpage.
+4. Saves a new standalone HTML file for the block (e.g., `docs/Blocks/Laser_Mapping.html`).
+5. Updates the master index page (`docs/Blocks.html`) to include a link to the new subpage.
 """
 
 import os
@@ -21,9 +21,9 @@ import html
 
 # Define paths relative to the repository root
 REGISTRY_PATH = 'marketplace/registry.json'
-HTML_PATH = 'blockDocs/Blocks.html'
+HTML_PATH = 'docs/Blocks.html'
 CUSTOM_BLOCKS_DIR = 'custom_blocks/'
-BLOCKS_DIR = 'blockDocs/Blocks/'
+BLOCKS_DIR = 'docs/Blocks/'
 
 def get_template():
     """
